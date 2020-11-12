@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 import os
 from pathlib import Path
 
+
+ADMINS = [('77', 'richard_qi@live.com')]
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -22,9 +24,10 @@ with open(os.path.join(BASE_DIR, "secret_key.txt")) as f:
     SECRET_KEY = f.read().strip()
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['.localhost','.qihxweb.com']
+#ALLOWED_HOSTS = ['localhost','qihxweb.com']
+ALLOWED_HOSTS = []
 
 # Application definition
 
@@ -37,6 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'world.apps.WorldConfig',
     'django.contrib.gis',
+    'crispy_forms',
+    'leaflet',
 ]
 
 MIDDLEWARE = [
@@ -64,6 +69,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+
             ],
         },
     },
@@ -122,3 +128,22 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
+CSRF_COOKIE_SECURE= False
+SESSION_COOKIE_SECURE= False
+
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+CRISPY_FAIL_SILENTLY = not DEBUG
+
+LEAFLET_CONFIG = {
+    'DEFAULT_CENTER': (53.0, -8.0),
+    'DEFAULT_ZOOM': 6,
+    'MIN_ZOOM': 3,
+    'MAX_ZOOM': 18,
+    'RESET_VIEW': False,
+    'SCALE': None,
+    'OPACITY': 0.5,
+}
+
+LOGIN_REDIRECT_URL = 'map' # home page
+LOGOUT_REDIRECT_URL = 'home'
